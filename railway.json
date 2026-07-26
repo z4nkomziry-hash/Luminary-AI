@@ -1,0 +1,23 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "buildCommand": "npm install --production=false"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ALWAYS",
+    "numReplicas": 1,
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 15
+  },
+  "service": {
+    "port": 3001,
+    "name": "luminary-ai-api"
+  },
+  "environments": {
+    "production": {
+      "NODE_ENV": "production",
+      "PORT": "3001"
+    }
+  }
+}
