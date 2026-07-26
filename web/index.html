@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#090D16" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AIVision">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="AIVision">
+    <meta name="description" content="AIVision - AI-Powered Multi-Lingual Language Platform with specialized Kurdish dialect support">
+    <meta name="keywords" content="AI, translation, Kurdish, multilingual, language learning, Badini, Sorani">
+    <meta name="author" content="Zaniyar Al-Mzurii">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="AIVision - AI Language Platform">
+    <meta property="og:description" content="Advanced AI text generation and translation across 12 languages">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AIVision">
+    
+    <!-- iOS Specific -->
+    <meta name="format-detection" content="telephone=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png">
+    <link rel="apple-touch-startup-image" href="/splash.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=SF+Pro+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <title>AIVision - AI Multi-Lingual Platform</title>
+</head>
+<body class="dark-mode platform-ios" data-platform="ios">
+    
+    <!-- ============================================ -->
+    <!-- PLATFORM DETECTION SCRIPT                     -->
+    <!-- ============================================ -->
+    <script>
+        (function() {
+            const ua = navigator.userAgent || '';
+            const body = document.body;
+            
+            // Platform detection
+            if (/iPhone|iPad|iPod/.test(ua)) {
+                body.dataset.platform = 'ios';
+                body.classList.add('platform-ios');
+            } else if (/Android/.test(ua)) {
+                body.dataset.platform = 'android';
+                body.classList.add('platform-android');
+            } else {
+                body.dataset.platform = 'desktop';
+                body.classList.add('platform-desktop');
+            }
+            
+            // Dark mode preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+            }
+            
+            // Listen for changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (e.matches) {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
+                } else {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                }
+            });
+        })();
+    </script>
+
+    <!-- ============================================ -->
+    <!-- APP CONTAINER                                -->
+    <!-- ============================================ -->
+    <div class="app-container" id="appContainer">
+        
+        <!-- ======================================== -->
+        <!-- HEADER / NAVIGATION BAR                   -->
+        <!-- ======================================== -->
+        <header class="app-header" id="appHeader" role="banner">
+            <div class="header-left">
+                <button class="header-btn menu-btn" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="menu-icon"></span>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="header-title">
+                    <span class="header-logo-icon">🌍</span>
+                    <span class="header-logo-text gradient-text">AIVision</span>
+                </h1>
+            </div>
+            <div class="header-right">
+                <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="header-btn profile-btn" id="profileBtn" aria-label="Profile">
+                    <div class="avatar avatar-sm" id="headerAvatar">👤</div>
+                </button>
+            </div>
+        </header>
+
+        <!-- ======================================== -->
+        <!-- SIDEBAR NAVIGATION (Desktop)              -->
+        <!-- ======================================== -->
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="sidebar-logo-icon">🌍</span>
+                    <span class="sidebar-logo-text gradient-text">AIVision</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list" role="list">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active" data-page="home" aria-current="page">
+                            <span class="nav-icon">🏠</span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#dashboard" class="nav-link" data-page="dashboard">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-label">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#languages" class="nav-link" data-page="languages">
+                            <span class="nav-icon">🌐</span>
+                            <span class="nav-label">Languages</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#ai-tools" class="nav-link" data-page="ai-tools">
+                            <span class="nav-icon">🤖</span>
+                            <span class="nav-label">AI Tools</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link" data-page="settings">
+                            <span class="nav-icon">⚙️</span>
+                            <span class="nav-label">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-card" id="sidebarUserCard">
+                    <div class="avatar" id="sidebarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="sidebarUserName">Guest</span>
+                        <span class="user-plan" id="sidebarUserPlan">Free Plan</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ======================================== -->
+        <!-- SIDEBAR OVERLAY (Mobile)                  -->
+        <!-- ======================================== -->
+        <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+        <!-- ======================================== -->
+        <!-- MAIN CONTENT AREA                         -->
+        <!-- ======================================== -->
+        <main class="main-content" id="mainContent" role="main" aria-label="Main content">
+            
+            <!-- ==================================== -->
+            <!-- HOME PAGE                             -->
+            <!-- ==================================== -->
+            <section class="page active" id="page-home" data-page="home">
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <div class="hero-bg-glow"></div>
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="pulse-dot"></span>
+                            <span>Powered by Google Gemini 1.5 Flash</span>
+                        </div>
+                        <h1 class="hero-title">
+                            <span class="gradient-text">AI-Powered Language</span>
+                            <br>Intelligence Platform
+                        </h1>
+                        <p class="hero-subtitle">
+                            Advanced AI text generation, translation, and grammar correction across 12 languages with specialized Kurdish dialect support.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary btn-lg" onclick="navigateTo('dashboard')">
+                                Get Started Free
+                                <span class="btn-arrow">→</span>
+                            </button>
+                            <button class="btn btn-secondary btn-lg" onclick="scrollToDemo()">
+                                Try Demo
+                            </button>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">12+</span>
+                                <span class="stat-label">Languages</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">99.9%</span>
+                                <span class="stat-label">Accuracy</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">&lt;1s</span>
+                                <span class="stat-label">Response</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Section -->
+                <div class="demo-section" id="demoSection">
+                    <h2 class="section-title">Experience the Power</h2>
+                    <div class="demo-card card">
+                        <div class="demo-tabs" id="demoTabs">
+                            <button class="demo-tab active" data-tab="generate">Generate</button>
+                            <button class="demo-tab" data-tab="rewrite">Rewrite</button>
+                            <button class="demo-tab" data-tab="grammar">Grammar</button>
+                            <button class="demo-tab" data-tab="translate">Translate</button>
+                        </div>
+                        <textarea 
+                            class="demo-input" 
+                            id="demoInput" 
+                            placeholder="Enter your text here and see the magic happen..."
+                            rows="4"
+                        ></textarea>
+                        <div class="demo-actions">
+                            <button class="btn btn-primary" id="demoGenerateBtn" onclick="runDemo()">
+                                <span class="btn-icon">✨</span>
+                                Generate
+                            </button>
+                            <button class="btn btn-ghost" onclick="clearDemo()">
+                                Clear
+                            </button>
+                        </div>
+                        <div class="demo-result" id="demoResult" style="display:none;">
+                            <div class="demo-result-header">
+                                <span>AI Response</span>
+                                <button class="btn btn-ghost btn-sm" onclick="copyDemoResult()">📋 Copy</button>
+                            </div>
+                            <div class="demo-result-content" id="demoResultContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="features-section">
+                    <h2 class="section-title">Powerful Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-card card">
+                            <div class="feature-icon">🤖</div>
+                            <h3>AI Text Generation</h3>
+                            <p>Create high-quality content in 12 languages with advanced AI models.</p>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="feature-icon">🌐</div>
+                            <h3>Precise Translation</h3>
+                            <p>Industry-leading translation with Kurdish dialect expertise.</p>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="feature-icon">✨</div>
+                            <h3>Grammar Perfection</h3>
+                            <p>Advanced grammar correction across all supported languages.</p>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Lightning Fast</h3>
+                            <p>Powered by Google Gemini 1.5 Flash for instant responses.</p>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="feature-icon">📱</div>
+                            <h3>Cross-Platform</h3>
+                            <p>Optimized for iOS, Android, and Desktop with native feel.</p>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Enterprise Security</h3>
+                            <p>JWT authentication, encrypted data, and secure API routes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================================== -->
+            <!-- DASHBOARD PAGE                        -->
+            <!-- ==================================== -->
+            <section class="page" id="page-dashboard" data-page="dashboard">
+                <div class="dashboard-header">
+                    <h2 class="section-title">Dashboard</h2>
+                    <div class="dashboard-stats-grid">
+                        <div class="stat-card card">
+                            <div class="stat-card-icon">📊</div>
+                            <div class="stat-card-value" id="dashTotalUsers">0</div>
+                            <div class="stat-card-label">Total Users</div>
+                        </div>
+                        <div class="stat-card card">
+                            <div class="stat-card-icon">🤖</div>
+                            <div class="stat-card-value" id="dashGenerations">0</div>
+                            <div class="stat-card-label">Generations</div>
+                        </div>
+                        <div class="stat-card card">
+                            <div class="stat-card-icon">💎</div>
+                            <div class="stat-card-value" id="dashProUsers">0</div>
+                            <div class="stat-card-label">Pro Users</div>
+                        </div>
+                        <div class="stat-card card">
+                            <div class="stat-card-icon">⏳</div>
+                            <div class="stat-card-value" id="dashPending">0</div>
+                            <div class="stat-card-label">Pending</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-content card">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <p class="text-muted">Loading activity...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================================== -->
+            <!-- LANGUAGES PAGE                        -->
+            <!-- ==================================== -->
+            <section class="page" id="page-languages" data-page="languages">
+                <h2 class="section-title">12 Languages Supported</h2>
+                <div class="languages-grid" id="languagesGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- ==================================== -->
+            <!-- AI TOOLS PAGE                         -->
+            <!-- ==================================== -->
+            <section class="page" id="page-ai-tools" data-page="ai-tools">
+                <h2 class="section-title">AI Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card card">
+                        <div class="tool-icon">📝</div>
+                        <h3>Text Generator</h3>
+                        <p>Generate creative text content</p>
+                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                    </div>
+                    <div class="tool-card card">
+                        <div class="tool-icon">🔄</div>
+                        <h3>Rewriter</h3>
+                        <p>Rewrite and improve your text</p>
+                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                    </div>
+                    <div class="tool-card card">
+                        <div class="tool-icon">✅</div>
+                        <h3>Grammar Check</h3>
+                        <p>Fix grammar and punctuation</p>
+                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                    </div>
+                    <div class="tool-card card">
+                        <div class="tool-icon">🌍</div>
+                        <h3>Translator</h3>
+                        <p>Translate between 12 languages</p>
+                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================================== -->
+            <!-- SETTINGS PAGE                         -->
+            <!-- ==================================== -->
+            <section class="page" id="page-settings" data-page="settings">
+                <h2 class="section-title">Settings</h2>
+                <div class="settings-list card">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Dark Mode</span>
+                            <span class="setting-desc">Toggle dark/light theme</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle" checked onchange="toggleTheme()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Language</span>
+                            <span class="setting-desc">Select your preferred language</span>
+                        </div>
+                        <select class="select-input" id="languageSelect" onchange="changeLanguage(this.value)">
+                            <option value="EN">English</option>
+                            <option value="KU-BD">Kurdish Badini</option>
+                            <option value="KU-SO">Kurdish Sorani</option>
+                            <option value="AR">Arabic</option>
+                            <option value="TR">Turkish</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-label">Notifications</span>
+                            <span class="setting-desc">Enable push notifications</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ======================================== -->
+        <!-- BOTTOM TAB BAR (iOS/Android Mobile)       -->
+        <!-- ======================================== -->
+        <nav class="tab-bar" id="tabBar" role="navigation" aria-label="Bottom navigation">
+            <button class="tab-item active" data-page="home" onclick="navigateTo('home')" aria-label="Home" aria-current="page">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">Home</span>
+            </button>
+            <button class="tab-item" data-page="dashboard" onclick="navigateTo('dashboard')" aria-label="Dashboard">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label">Dashboard</span>
+            </button>
+            <button class="tab-item" data-page="languages" onclick="navigateTo('languages')" aria-label="Languages">
+                <span class="tab-icon">🌐</span>
+                <span class="tab-label">Languages</span>
+            </button>
+            <button class="tab-item" data-page="ai-tools" onclick="navigateTo('ai-tools')" aria-label="AI Tools">
+                <span class="tab-icon">🤖</span>
+                <span class="tab-label">AI Tools</span>
+            </button>
+            <button class="tab-item" data-page="settings" onclick="navigateTo('settings')" aria-label="Settings">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">Settings</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TOAST CONTAINER                               -->
+    <!-- ============================================ -->
+    <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS                                       -->
+    <!-- ============================================ -->
+    <script src="script.js"></script>
+</body>
+</html>
