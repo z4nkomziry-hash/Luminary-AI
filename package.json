@@ -2,37 +2,26 @@
   "name": "luminary-ai",
   "version": "6.0.0",
   "private": true,
-  "description": "Luminary AI - Advanced Multi-Lingual AI Platform with specialized Kurdish dialect support. Built by Zaniyar Al-Mzurii.",
+  "description": "Luminary AI - Advanced Multi-Lingual AI Platform with specialized Kurdish dialect support. Illuminate Your Language Journey. Built by Zaniyar Al-Mzurii.",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "bot": "node bot/bot.js",
-    "lint": "next lint"
+    "build": "echo 'No build step required for static frontend' && mkdir -p dist && cp -r web/* dist/",
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "bot": "node server/bot.js",
+    "dev": "node server/index.js",
+    "vercel-build": "echo 'Static build complete'"
   },
   "dependencies": {
     "@google/generative-ai": "0.21.0",
-    "@supabase/ssr": "0.5.2",
     "@supabase/supabase-js": "2.47.2",
+    "cors": "2.8.5",
     "dotenv": "16.4.5",
-    "framer-motion": "11.11.17",
+    "express": "4.21.0",
     "grammy": "1.30.0",
-    "lucide-react": "0.462.0",
-    "next": "14.2.21",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-hot-toast": "2.4.1"
+    "helmet": "7.1.0"
   },
   "devDependencies": {
-    "@types/node": "20.14.0",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "autoprefixer": "10.4.20",
-    "eslint": "8.57.1",
-    "eslint-config-next": "14.2.21",
-    "postcss": "8.4.49",
-    "tailwindcss": "3.4.16",
-    "typescript": "5.5.3"
+    "nodemon": "3.1.7"
   },
   "author": "Zaniyar Al-Mzurii",
   "license": "MIT",
@@ -45,7 +34,6 @@
     "language-learning",
     "Badini",
     "Sorani",
-    "Next.js",
-    "Gemini"
+    "Zaniyar Al-Mzurii"
   ]
 }
