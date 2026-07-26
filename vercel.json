@@ -1,10 +1,10 @@
 {
   "version": 2,
   "name": "luminary-ai",
-  "buildCommand": "echo 'Static site - no build required'",
+  "framework": null,
+  "buildCommand": "echo 'Static site - no build required' && mkdir -p dist && cp -r web/* dist/",
   "outputDirectory": "web",
   "installCommand": "npm install --production=false",
-  "framework": null,
   "rewrites": [
     {
       "source": "/(.*)",
@@ -14,6 +14,11 @@
   "redirects": [
     {
       "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home",
       "destination": "/",
       "permanent": true
     }
@@ -50,7 +55,7 @@
       ]
     },
     {
-      "source": "/(.*).(jpg|jpeg|png|gif|ico|svg|webp|css|js|json|woff|woff2)",
+      "source": "/(.*)\\.(jpg|jpeg|png|gif|ico|svg|webp|css|js|json|woff|woff2|ttf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
