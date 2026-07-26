@@ -4,12 +4,12 @@
   "private": true,
   "description": "Luminary AI - Advanced Multi-Lingual AI Platform with specialized Kurdish dialect support. Illuminate Your Language Journey. Built by Zaniyar Al-Mzurii.",
   "scripts": {
-    "build": "echo 'No build step required for static frontend' && mkdir -p dist && cp -r web/* dist/",
+    "build": "echo 'Static site - no build step required'",
     "start": "node server/index.js",
     "server": "node server/index.js",
     "bot": "node server/bot.js",
     "dev": "node server/index.js",
-    "vercel-build": "echo 'Static build complete'"
+    "vercel-build": "echo 'Vercel static build complete'"
   },
   "dependencies": {
     "@google/generative-ai": "0.21.0",
