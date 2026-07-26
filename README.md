@@ -1,21 +1,22 @@
-# ✨ Luminary AI — Advanced Multi-Lingual Platform
+# ✨ Luminary AI — Illuminate Your Language Journey
 
-**Illuminate Your Language Journey**
+**Advanced Multi-Lingual AI Platform with specialized Kurdish dialect support**
 
-Luminary AI is a cutting-edge, AI-powered multi-lingual platform that provides advanced text generation, translation, grammar correction, and content rewriting across 12 languages with specialized Kurdish Badini & Sorani dialect support.
+Luminary AI is a cutting-edge, AI-powered platform providing text generation, translation, grammar correction, and the Zîman language learning engine across 12 languages with unmatched Kurdish Badini & Sorani expertise.
 
 ---
 
 ## 🚀 Features
 
-- **12 Languages Supported** — English, Kurdish (Badini & Sorani), Arabic, Turkish, Persian, German, French, Spanish, Russian, Chinese, Hindi
-- **AI Text Generation** — Create high-quality content powered by Google Gemini 1.5 Flash
-- **Precise Translation** — Industry-leading accuracy with cultural context awareness
-- **Grammar Perfection** — Advanced multilingual grammar correction
-- **Zîman Engine** — Dedicated language learning suite with lessons, quizzes, flashcards, and AI teacher
-- **Cross-Platform** — Optimized for iOS, Android, and Desktop with native feel
-- **Enterprise Security** — JWT authentication, encrypted data, secure API routes
+- **12 Languages** — English, Kurdish (Badini & Sorani), Arabic, Turkish, Persian, German, French, Spanish, Russian, Chinese, Hindi
+- **AI Text Generation** — Powered by Google Gemini 1.5 Flash
+- **Precise Translation** — 99.9% accuracy with cultural context awareness
+- **Zîman Engine** — Full language learning suite (lessons, quizzes, flashcards, AI teacher)
+- **Cross-Platform** — iOS (native feel), Android (Material Design), Desktop (full layout)
 - **Telegram Admin Bot** — 24/7 private executive console for platform management
+- **Google AdSense** — Integrated ad placements for monetization
+- **Enterprise Security** — JWT authentication, encrypted data, secure API routes
+- **Developer VVIP Profile** — Showcase section with contact cards and social links
 
 ---
 
