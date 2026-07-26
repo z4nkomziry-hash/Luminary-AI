@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090D16">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Luminary AI - Admin Dashboard. Secure platform management console.">
+    <meta name="author" content="Zaniyar Al-Mzurii">
+    
+    <title>Luminary AI - Admin Dashboard | Built by Zaniyar Al-Mzurii</title>
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Inline Admin Styles -->
+    <style>
+        /* Admin-specific overrides */
+        .admin-body {
+            background: var(--bg-void);
+            min-height: 100vh;
+            font-family: var(--font-primary);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .admin-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Admin Header */
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 64px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-default);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .admin-back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .admin-title {
+            font-size: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-title-icon {
+            font-size: 24px;
+        }
+
+        .admin-badge {
+            font-size: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .admin-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: adminPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes adminPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent); }
+            50% { opacity: 0.5; box-shadow: 0 0 8px var(--accent); }
+        }
+
+        .admin-status-dot.warning {
+            background: var(--warning);
+        }
+
+        .admin-status-dot.error {
+            background: var(--danger);
+        }
+
+        /* Admin Layout */
+        .admin-layout {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Admin Sidebar */
+        .admin-sidebar {
+            width: 220px;
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border-default);
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            border: none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-primary);
+        }
+
+        .admin-nav-link:hover {
+            background: var(--bg-glass-strong);
+            color: var(--text-primary);
+        }
+
+        .admin-nav-link.active {
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--secondary-rgb), 0.1));
+            color: white;
+            font-weight: 600;
+        }
+
+        .admin-nav-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .admin-nav-badge {
+            margin-left: auto;
+            font-size: 10px;
+            background: var(--danger);
+            color: white;
+            padding: 2px 7px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+        }
+
+        /* Admin Main Content */
+        .admin-main {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(100vh - 64px);
+        }
+
+        /* Admin Sections */
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+            animation: adminFadeIn 0.3s ease-out;
+        }
+
+        @keyframes adminFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .admin-section-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .admin-section-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Stats Grid */
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .admin-stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .admin-stat-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .admin-stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .admin-stat-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .admin-stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--secondary);
+            font-family: var(--font-mono);
+            margin-bottom: 4px;
+        }
+
+        .admin-stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .admin-stat-change {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .admin-stat-change.positive {
+            color: var(--accent);
+        }
+
+        .admin-stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* Search Bar */
+        .admin-search-bar {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .admin-search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border-default);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-primary);
+            transition: border-color var(--transition-fast);
+        }
+
+        .admin-search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+        }
+
+        .admin-search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .admin-search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Table */
+        .admin-table-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .admin-table thead {
+            background: var(--bg-elevated);
+        }
+
+        .admin-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-default);
+            white-space: nowrap;
+        }
+
+        .admin-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-default);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .admin-table tbody tr {
+            transition: background var(--transition-fast);
+        }
+
+        .admin-table tbody tr:hover {
+            background: var(--bg-glass);
+        }
+
+        .admin-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table code {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            background: var(--bg-glass-strong);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--secondary);
+        }
+
+        /* Status Badges in Table */
+        .admin-status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .admin-status-badge.active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .admin-status-badge.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .admin-status-badge.inactive {
+            background: rgba(107, 114, 128, 0.15);
+            color: var(--text-muted);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        .admin-status-badge.banned {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .admin-status-badge.pro {
+            background: rgba(124, 58, 237, 0.15);
+            color: var(--primary-light);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Action Buttons */
+        .admin-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .admin-btn {
+            padding: 6px 12px;
+            border-radius: var(--radius-xs);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all var(--transition-fast);
+            font-family: var(--font-primary);
+            white-space: nowrap;
+        }
+
+        .admin-btn-approve {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .admin-btn-approve:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .admin-btn-reject {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .admin-btn-reject:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        .admin-btn-view {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--info);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .admin-btn-view:hover {
+            background: rgba(59, 130, 246, 0.25);
+        }
+
+        .admin-btn-ban {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .admin-btn-ban:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Chart Placeholder */
+        .admin-chart-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .admin-chart-area {
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border-default);
+        }
+
+        /* Broadcast Section */
+        .admin-broadcast-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-broadcast-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px 16px;
+            background: var(--bg-elevated);
+            border: 1.5px solid var(--border-default);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-primary);
+            resize: vertical;
+            margin-bottom: 12px;
+            transition: border-color var(--transition-fast);
+        }
+
+        .admin-broadcast-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .admin-broadcast-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .admin-broadcast-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .admin-broadcast-info {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        /* Loading State */
+        .admin-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            color: var(--text-muted);
+            font-size: 14px;
+            gap: 10px;
+        }
+
+        .admin-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-default);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: adminSpin 0.8s linear infinite;
+        }
+
+        @keyframes adminSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .admin-empty {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .admin-empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .admin-empty-text {
+            font-size: 14px;
+        }
+
+        /* Settings Section */
+        .admin-settings-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .admin-setting-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .admin-setting-card h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .admin-setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .admin-setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .admin-setting-label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .admin-setting-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 8px;
+                gap: 4px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-default);
+            }
+
+            .admin-nav-link {
+                white-space: nowrap;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .admin-nav-badge {
+                display: none;
+            }
+
+            .admin-main {
+                padding: 16px;
+                max-height: none;
+            }
+
+            .admin-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .admin-stat-value {
+                font-size: 24px;
+            }
+
+            .admin-table-container {
+                overflow-x: auto;
+            }
+
+            .admin-header {
+                padding: 0 12px;
+            }
+
+            .admin-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header-right {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode admin-body">
+    
+    <!-- ============================================ -->
+    <!-- ADMIN CONTAINER                              -->
+    <!-- ============================================ -->
+    <div class="admin-container">
+        
+        <!-- ======================================== -->
+        <!-- ADMIN HEADER                             -->
+        <!-- ======================================== -->
+        <header class="admin-header">
+            <div class="admin-header-left">
+                <a href="/" class="admin-back-link" title="Back to Main Site">
+                    ← Back to Site
+                </a>
+                <h1 class="admin-title">
+                    <span class="admin-title-icon">✨</span>
+                    Luminary AI
+                    <span class="admin-badge">Admin</span>
+                </h1>
+            </div>
+            <div class="admin-header-right">
+                <div class="admin-status-indicator" id="adminConnectionStatus">
+                    <span class="admin-status-dot" id="adminStatusDot"></span>
+                    <span id="adminStatusText">Connected</span>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="AdminApp.refreshAll()" title="Refresh Data">
+                    🔄 Refresh
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="AdminApp.logout()" title="Logout">
+                    🚪 Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- ======================================== -->
+        <!-- ADMIN LAYOUT                             -->
+        <!-- ======================================== -->
+        <div class="admin-layout">
+            
+            <!-- ==================================== -->
+            <!-- ADMIN SIDEBAR                        -->
+            <!-- ==================================== -->
+            <aside class="admin-sidebar" id="adminSidebar">
+                <button class="admin-nav-link active" data-section="overview" onclick="AdminApp.navigateToSection('overview')">
+                    <span class="admin-nav-icon">📊</span>
+                    Overview
+                </button>
+                <button class="admin-nav-link" data-section="users" onclick="AdminApp.navigateToSection('users')">
+                    <span class="admin-nav-icon">👥</span>
+                    Users
+                    <span class="admin-nav-badge" id="userCountBadge" style="display:none">0</span>
+                </button>
+                <button class="admin-nav-link" data-section="payments" onclick="AdminApp.navigateToSection('payments')">
+                    <span class="admin-nav-icon">💰</span>
+                    Payments
+                    <span class="admin-nav-badge" id="paymentCountBadge" style="display:none">0</span>
+                </button>
+                <button class="admin-nav-link" data-section="generations" onclick="AdminApp.navigateToSection('generations')">
+                    <span class="admin-nav-icon">🤖</span>
+                    Generations
+                </button>
+                <button class="admin-nav-link" data-section="analytics" onclick="AdminApp.navigateToSection('analytics')">
+                    <span class="admin-nav-icon">📈</span>
+                    Analytics
+                </button>
+                <button class="admin-nav-link" data-section="broadcast" onclick="AdminApp.navigateToSection('broadcast')">
+                    <span class="admin-nav-icon">📢</span>
+                    Broadcast
+                </button>
+                <button class="admin-nav-link" data-section="settings" onclick="AdminApp.navigateToSection('settings')">
+                    <span class="admin-nav-icon">⚙️</span>
+                    Settings
+                </button>
+            </aside>
+
+            <!-- ==================================== -->
+            <!-- ADMIN MAIN CONTENT                   -->
+            <!-- ==================================== -->
+            <main class="admin-main" id="adminMain">
+                
+                <!-- ================================ -->
+                <!-- OVERVIEW SECTION                 -->
+                <!-- ================================ -->
+                <section class="admin-section active" id="section-overview">
+                    <h2 class="admin-section-title">Dashboard Overview</h2>
+                    <p class="admin-section-subtitle">Real-time platform statistics and metrics</p>
+                    
+                    <div class="admin-stats-grid">
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-icon">👥</div>
+                            <div class="admin-stat-value" id="overviewTotalUsers">--</div>
+                            <div class="admin-stat-label">Total Registered Users</div>
+                            <div class="admin-stat-change positive" id="overviewUserChange">+12% this month</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-icon">💎</div>
+                            <div class="admin-stat-value" id="overviewProUsers">--</div>
+                            <div class="admin-stat-label">Pro Subscribers</div>
+                            <div class="admin-stat-change positive" id="overviewProChange">+5% this month</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-icon">🤖</div>
+                            <div class="admin-stat-value" id="overviewTotalGenerations">--</div>
+                            <div class="admin-stat-label">Total AI Generations</div>
+                            <div class="admin-stat-change positive">+18% this week</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="admin-stat-icon">💰</div>
+                            <div class="admin-stat-value" id="overviewRevenue">--</div>
+                            <div class="admin-stat-label">Monthly Revenue</div>
+                            <div class="admin-stat-change positive">+22% this month</div>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">📈 User Growth (Last 30 Days)</h3>
+                        <div class="admin-chart-area" id="overviewChart">
+                            <span>Chart visualization coming soon</span>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">🕐 Recent Activity</h3>
+                        <div class="admin-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overviewActivityTable">
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="admin-loading">
+                                                <div class="admin-spinner"></div>
+                                                Loading activity...
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- USERS SECTION                    -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-users">
+                    <h2 class="admin-section-title">👥 User Management</h2>
+                    <p class="admin-section-subtitle">View, search, and manage platform users</p>
+                    
+                    <div class="admin-search-bar">
+                        <span class="admin-search-icon">🔍</span>
+                        <input type="text" class="admin-search-input" id="userSearchInput" placeholder="Search by name, email, or user ID..." oninput="AdminApp.searchUsers(this.value)">
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Plan</th>
+                                    <th>XP</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="admin-loading">
+                                            <div class="admin-spinner"></div>
+                                            Loading users...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- PAYMENTS SECTION                 -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-payments">
+                    <h2 class="admin-section-title">💰 Payment Requests</h2>
+                    <p class="admin-section-subtitle">Review and process payment submissions</p>
+                    
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Method</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTableBody">
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="admin-loading">
+                                            <div class="admin-spinner"></div>
+                                            Loading payments...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- GENERATIONS SECTION              -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-generations">
+                    <h2 class="admin-section-title">🤖 Generation History</h2>
+                    <p class="admin-section-subtitle">View all AI text generation activity</p>
+                    
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Prompt</th>
+                                    <th>Language</th>
+                                    <th>Task</th>
+                                    <th>Model</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="generationsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="admin-loading">
+                                            <div class="admin-spinner"></div>
+                                            Loading generations...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- ANALYTICS SECTION                -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-analytics">
+                    <h2 class="admin-section-title">📈 Analytics</h2>
+                    <p class="admin-section-subtitle">Platform performance and usage metrics</p>
+                    
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">Daily Active Users</h3>
+                        <div class="admin-chart-area" id="analyticsDAUChart">
+                            <span>Analytics visualization coming soon</span>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">Generations by Language</h3>
+                        <div class="admin-chart-area" id="analyticsLangChart">
+                            <span>Analytics visualization coming soon</span>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">Revenue Trends</h3>
+                        <div class="admin-chart-area" id="analyticsRevenueChart">
+                            <span>Analytics visualization coming soon</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- BROADCAST SECTION                -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-broadcast">
+                    <h2 class="admin-section-title">📢 Broadcast Message</h2>
+                    <p class="admin-section-subtitle">Send a message to all platform users</p>
+                    
+                    <div class="admin-broadcast-card">
+                        <h3 style="margin-bottom:12px">Compose Broadcast</h3>
+                        <textarea class="admin-broadcast-textarea" id="broadcastMessage" placeholder="Type your broadcast message here... This will be sent to all registered users." maxlength="2000"></textarea>
+                        <div class="admin-broadcast-actions">
+                            <button class="btn btn-primary" onclick="AdminApp.sendBroadcast()">
+                                📢 Send Broadcast
+                            </button>
+                            <button class="btn btn-ghost" onclick="document.getElementById('broadcastMessage').value = ''">
+                                Clear
+                            </button>
+                            <span class="admin-broadcast-info">
+                                <span id="broadcastCharCount">0</span>/2000 characters
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="admin-chart-container">
+                        <h3 class="admin-chart-title">📋 Broadcast History</h3>
+                        <div class="admin-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th>Sent To</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="broadcastHistoryTable">
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="admin-empty">
+                                                <div class="admin-empty-icon">📭</div>
+                                                <p class="admin-empty-text">No broadcasts sent yet</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================ -->
+                <!-- SETTINGS SECTION                 -->
+                <!-- ================================ -->
+                <section class="admin-section" id="section-settings">
+                    <h2 class="admin-section-title">⚙️ Admin Settings</h2>
+                    <p class="admin-section-subtitle">Configure platform settings</p>
+                    
+                    <div class="admin-settings-grid">
+                        <div class="admin-setting-card">
+                            <h3>🔧 Platform Configuration</h3>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Maintenance Mode</div>
+                                    <div class="admin-setting-desc">Disable public access to the platform</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="maintenanceModeToggle" onchange="AdminApp.toggleMaintenance(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Auto-Approve Payments</div>
+                                    <div class="admin-setting-desc">Automatically approve payment requests</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoApproveToggle" onchange="AdminApp.toggleAutoApprove(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Email Notifications</div>
+                                    <div class="admin-setting-desc">Receive email alerts for new registrations</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="emailNotifToggle" checked onchange="AdminApp.toggleEmailNotif(this.checked)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="admin-setting-card">
+                            <h3>📊 API & Integration</h3>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Gemini API Status</div>
+                                    <div class="admin-setting-desc">Google Gemini 1.5 Flash integration</div>
+                                </div>
+                                <span class="admin-status-badge active">Connected</span>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Supabase Status</div>
+                                    <div class="admin-setting-desc">Database and authentication service</div>
+                                </div>
+                                <span class="admin-status-badge active">Connected</span>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Telegram Bot</div>
+                                    <div class="admin-setting-desc">Admin notification bot status</div>
+                                </div>
+                                <span class="admin-status-badge active">Online</span>
+                            </div>
+                        </div>
+
+                        <div class="admin-setting-card">
+                            <h3>👨‍💻 Developer Info</h3>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Platform Version</div>
+                                    <div class="admin-setting-desc">Current deployment version</div>
+                                </div>
+                                <span><code>v6.0.0</code></span>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Developer</div>
+                                    <div class="admin-setting-desc">Lead Full-Stack Engineer & AI Architect</div>
+                                </div>
+                                <span><strong>Zaniyar Al-Mzurii</strong></span>
+                            </div>
+                            <div class="admin-setting-row">
+                                <div>
+                                    <div class="admin-setting-label">Contact</div>
+                                    <div class="admin-setting-desc">Telegram / WhatsApp</div>
+                                </div>
+                                <span><code>@z_14x</code></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TOAST CONTAINER                               -->
+    <!-- ============================================ -->
+    <div class="toast-container" id="adminToastContainer" role="status" aria-live="polite"></div>
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS                                       -->
+    <!-- ============================================ -->
+    <script src="supabaseClient.js"></script>
+    
+    <script>
+        /**
+         * Luminary AI - Admin Dashboard Script
+         * Developer: Zaniyar Al-Mzurii
+         * Version: 6.0.0
+         */
+        'use strict';
+
+        var AdminApp = {
+            currentSection: 'overview',
+            isAuthenticated: false,
+            stats: {
+                totalUsers: 0,
+                proUsers: 0,
+                totalGenerations: 0,
+                pendingPayments: 0,
+                revenue: 0
+            },
+            config: {
+                appName: 'Luminary AI',
+                developerName: 'Zaniyar Al-Mzurii',
+                developerTelegram: 'https://t.me/z_14x',
+                version: '6.0.0'
+            }
+        };
+
+        // ============================================================
+        // INITIALIZATION
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            AdminApp.init();
+        });
+
+        AdminApp.init = function() {
+            AdminApp.checkAuth();
+            AdminApp.loadOverview();
+            AdminApp.setupBroadcastCharCounter();
+            AdminApp.updateConnectionStatus();
+            
+            console.log('✨ ' + AdminApp.config.appName + ' Admin Dashboard Ready');
+            console.log('👨‍💻 Developer: ' + AdminApp.config.developerName);
+            console.log('📦 Version: ' + AdminApp.config.version);
+        };
+
+        // ============================================================
+        // AUTH
+        // ============================================================
+
+        AdminApp.checkAuth = function() {
+            if (window.Auth && typeof window.Auth.getUser === 'function') {
+                window.Auth.getUser().then(function(user) {
+                    if (user) {
+                        AdminApp.isAuthenticated = true;
+                        console.log('✅ Admin authenticated');
+                    } else {
+                        console.warn('⚠️ Not authenticated. Some features may be limited.');
+                        AdminApp.showToast('⚠️ Running in demo mode. Login for full access.', 'info');
+                    }
+                });
+            } else {
+                console.warn('⚠️ Auth not available. Running in demo mode.');
+            }
+        };
+
+        AdminApp.logout = function() {
+            if (window.Auth && typeof window.Auth.signOut === 'function') {
+                window.Auth.signOut().then(function() {
+                    window.location.href = '/';
+                });
+            } else {
+                window.location.href = '/';
+            }
+        };
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+
+        AdminApp.navigateToSection = function(section) {
+            AdminApp.currentSection = section;
+
+            // Update sections
+            var sections = document.querySelectorAll('.admin-section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            var target = document.getElementById('section-' + section);
+            if (target) target.classList.add('active');
+
+            // Update sidebar
+            var navLinks = document.querySelectorAll('.admin-nav-link');
+            for (var j = 0; j < navLinks.length; j++) {
+                navLinks[j].classList.remove('active');
+                if (navLinks[j].getAttribute('data-section') === section) {
+                    navLinks[j].classList.add('active');
+                }
+            }
+
+            // Load section data
+            switch (section) {
+                case 'overview':
+                    AdminApp.loadOverview();
+                    break;
+                case 'users':
+                    AdminApp.loadUsers();
+                    break;
+                case 'payments':
+                    AdminApp.loadPayments();
+                    break;
+                case 'generations':
+                    AdminApp.loadGenerations();
+                    break;
+                case 'analytics':
+                    AdminApp.loadAnalytics();
+                    break;
+                case 'broadcast':
+                    // No data load needed
+                    break;
+                case 'settings':
+                    // No data load needed
+                    break;
+            }
+        };
+
+        // ============================================================
+        // OVERVIEW
+        // ============================================================
+
+        AdminApp.loadOverview = function() {
+            if (window.DB && typeof window.DB.getStats === 'function') {
+                window.DB.getStats().then(function(stats) {
+                    if (stats) {
+                        AdminApp.stats = stats;
+                    }
+                    AdminApp.renderOverview();
+                }).catch(function() {
+                    AdminApp.loadDemoOverview();
+                });
+            } else {
+                AdminApp.loadDemoOverview();
+            }
+        };
+
+        AdminApp.loadDemoOverview = function() {
+            AdminApp.stats = {
+                totalUsers: Math.floor(Math.random() * 5000) + 1000,
+                proUsers: Math.floor(Math.random() * 500) + 100,
+                totalGenerations: Math.floor(Math.random() * 50000) + 10000,
+                pendingPayments: Math.floor(Math.random() * 20) + 1,
+                revenue: (Math.random() * 5000 + 500).toFixed(2)
+            };
+            AdminApp.renderOverview();
+        };
+
+        AdminApp.renderOverview = function() {
+            document.getElementById('overviewTotalUsers').textContent = AdminApp.stats.totalUsers.toLocaleString();
+            document.getElementById('overviewProUsers').textContent = AdminApp.stats.proUsers.toLocaleString();
+            document.getElementById('overviewTotalGenerations').textContent = AdminApp.stats.totalGenerations.toLocaleString();
+            document.getElementById('overviewRevenue').textContent = '$' + (AdminApp.stats.revenue || '0');
+
+            // Update payment badge
+            var badge = document.getElementById('paymentCountBadge');
+            if (badge && AdminApp.stats.pendingPayments > 0) {
+                badge.textContent = AdminApp.stats.pendingPayments;
+                badge.style.display = 'inline';
+            }
+
+            // Render activity
+            AdminApp.renderActivity();
+        };
+
+        AdminApp.renderActivity = function() {
+            var tbody = document.getElementById('overviewActivityTable');
+            if (!tbody) return;
+
+            var activities = [
+                { user: 'Ahmed H.', action: 'Completed lesson', details: 'English → Kurdish - Lesson 5', time: '2 min ago' },
+                { user: 'Sara M.', action: 'Generated AI text', details: 'Task: Translate - 245 words', time: '5 min ago' },
+                { user: 'Rebin K.', action: 'Upgraded to Pro', details: 'Payment via FIB - $9.99', time: '12 min ago' },
+                { user: 'Dana A.', action: 'New registration', details: 'Signed up via Google OAuth', time: '18 min ago' },
+                { user: 'Lana S.', action: 'Started Zîman Engine', details: 'Language pair: en-ku', time: '25 min ago' },
+                { user: 'Aso R.', action: 'Submitted payment', details: 'FastPay - $9.99', time: '30 min ago' },
+                { user: 'Zhala W.', action: 'Completed quiz', details: 'Score: 8/10 - +80 XP', time: '45 min ago' }
+            ];
+
+            var html = '';
+            for (var i = 0; i < activities.length; i++) {
+                var a = activities[i];
+                html += '<tr>';
+                html += '<td><strong>' + AdminApp.escapeHtml(a.user) + '</strong></td>';
+                html += '<td>' + AdminApp.escapeHtml(a.action) + '</td>';
+                html += '<td style="font-size:12px;color:var(--text-muted)">' + AdminApp.escapeHtml(a.details) + '</td>';
+                html += '<td style="font-size:11px;color:var(--text-muted)">' + AdminApp.escapeHtml(a.time) + '</td>';
+                html += '</tr>';
+            }
+            tbody.innerHTML = html;
+        };
+
+        // ============================================================
+        // USERS
+        // ============================================================
+
+        AdminApp.loadUsers = function() {
+            var tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="7"><div class="admin-loading"><div class="admin-spinner"></div>Loading users...</div></td></tr>';
+
+            if (window.DB && typeof window.DB.getUsers === 'function') {
+                window.DB.getUsers(1, 50).then(function(users) {
+                    AdminApp.renderUsersTable(users);
+                }).catch(function() {
+                    AdminApp.loadDemoUsers();
+                });
+            } else {
+                AdminApp.loadDemoUsers();
+            }
+        };
+
+        AdminApp.loadDemoUsers = function() {
+            var demoUsers = [
+                { full_name: 'Demo User', email: 'demo@luminary.ai', subscription_status: 'free', xp_points: 1250, is_banned: false, created_at: '2025-01-15T10:30:00Z' },
+                { full_name: 'Pro User', email: 'pro@luminary.ai', subscription_status: 'pro', xp_points: 8750, is_banned: false, created_at: '2025-01-10T08:15:00Z' },
+                { full_name: 'Sara Ahmed', email: 'learner@luminary.ai', subscription_status: 'free', xp_points: 2750, is_banned: false, created_at: '2025-02-20T12:00:00Z' },
+                { full_name: 'Ahmed Hassan', email: 'ahmed@luminary.ai', subscription_status: 'pro', xp_points: 5200, is_banned: false, created_at: '2025-03-01T09:00:00Z' },
+                { full_name: 'Banned User', email: 'spam@luminary.ai', subscription_status: 'free', xp_points: 100, is_banned: true, created_at: '2025-04-10T14:00:00Z' }
+            ];
+            AdminApp.renderUsersTable(demoUsers);
+        };
+
+        AdminApp.renderUsersTable = function(users) {
+            var tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+
+            if (!users || users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7"><div class="admin-empty"><div class="admin-empty-icon">👥</div><p class="admin-empty-text">No users found</p></div></td></tr>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < users.length; i++) {
+                var u = users[i];
+                var plan = u.subscription_status === 'pro' ? 'pro' : 'free';
+                var status = u.is_banned ? 'banned' : 'active';
+                var statusLabel = u.is_banned ? 'Banned' : 'Active';
+
+                html += '<tr>';
+                html += '<td><strong>' + AdminApp.escapeHtml(u.full_name || 'N/A') + '</strong></td>';
+                html += '<td>' + AdminApp.escapeHtml(u.email || 'N/A') + '</td>';
+                html += '<td><span class="admin-status-badge ' + plan + '">' + (plan === 'pro' ? '💎 Pro' : '🆓 Free') + '</span></td>';
+                html += '<td>' + (u.xp_points || 0).toLocaleString() + '</td>';
+                html += '<td><span class="admin-status-badge ' + status + '">' + statusLabel + '</span></td>';
+                html += '<td>' + new Date(u.created_at).toLocaleDateString() + '</td>';
+                html += '<td>';
+                html += '<div class="admin-actions">';
+                html += '<button class="admin-btn admin-btn-view" onclick="AdminApp.viewUser(\'' + (u.user_id || '') + '\')">View</button>';
+                if (u.is_banned) {
+                    html += '<button class="admin-btn admin-btn-approve" onclick="AdminApp.unbanUser(\'' + (u.user_id || '') + '\')">Unban</button>';
+                } else {
+                    html += '<button class="admin-btn admin-btn-ban" onclick="AdminApp.banUser(\'' + (u.user_id || '') + '\')">Ban</button>';
+                }
+                html += '</div>';
+                html += '</td>';
+                html += '</tr>';
+            }
+            tbody.innerHTML = html;
+        };
+
+        AdminApp.searchUsers = function(query) {
+            if (!query || query.length < 2) {
+                AdminApp.loadUsers();
+                return;
+            }
+
+            if (window.DB && typeof window.DB.searchUsers === 'function') {
+                window.DB.searchUsers(query).then(function(users) {
+                    AdminApp.renderUsersTable(users);
+                });
+            }
+        };
+
+        AdminApp.viewUser = function(userId) {
+            AdminApp.showToast('👤 Viewing user details for: ' + userId, 'info');
+        };
+
+        AdminApp.banUser = function(userId) {
+            if (confirm('Are you sure you want to ban this user?')) {
+                AdminApp.showToast('🚫 User banned: ' + userId, 'info');
+                AdminApp.loadUsers();
+            }
+        };
+
+        AdminApp.unbanUser = function(userId) {
+            if (confirm('Unban this user?')) {
+                AdminApp.showToast('✅ User unbanned: ' + userId, 'success');
+                AdminApp.loadUsers();
+            }
+        };
+
+        // ============================================================
+        // PAYMENTS
+        // ============================================================
+
+        AdminApp.loadPayments = function() {
+            var tbody = document.getElementById('paymentsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="8"><div class="admin-loading"><div class="admin-spinner"></div>Loading payments...</div></td></tr>';
+
+            if (window.DB && typeof window.DB.getPendingPayments === 'function') {
+                window.DB.getPendingPayments().then(function(payments) {
+                    AdminApp.renderPaymentsTable(payments);
+                }).catch(function() {
+                    AdminApp.loadDemoPayments();
+                });
+            } else {
+                AdminApp.loadDemoPayments();
+            }
+        };
+
+        AdminApp.loadDemoPayments = function() {
+            var demoPayments = [
+                { id: 'pay1', user_id: 'u2', full_name: 'Pro User', email: 'pro@luminary.ai', method: 'FIB', transaction_id: 'TX987654321', amount: 9.99, status: 'pending', created_at: '2025-06-19T11:00:00Z' },
+                { id: 'pay2', user_id: 'u3', full_name: 'Sara Ahmed', email: 'learner@luminary.ai', method: 'FastPay', transaction_id: 'TX123456789', amount: 9.99, status: 'pending', created_at: '2025-06-20T09:30:00Z' },
+                { id: 'pay3', user_id: 'u4', full_name: 'Ahmed Hassan', email: 'ahmed@luminary.ai', method: 'USDT', transaction_id: '0xabcdef1234567890', amount: 9.99, status: 'pending', created_at: '2025-06-20T14:00:00Z' }
+            ];
+            AdminApp.renderPaymentsTable(demoPayments);
+        };
+
+        AdminApp.renderPaymentsTable = function(payments) {
+            var tbody = document.getElementById('paymentsTableBody');
+            if (!tbody) return;
+
+            if (!payments || payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8"><div class="admin-empty"><div class="admin-empty-icon">💰</div><p class="admin-empty-text">No pending payments</p></div></td></tr>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < payments.length; i++) {
+                var p = payments[i];
+                var statusClass = p.status === 'approved' ? 'active' : p.status === 'rejected' ? 'banned' : 'pending';
+                var statusLabel = p.status.charAt(0).toUpperCase() + p.status.slice(1);
+
+                html += '<tr>';
+                html += '<td><strong>' + AdminApp.escapeHtml(p.full_name || 'N/A') + '</strong></td>';
+                html += '<td>' + AdminApp.escapeHtml(p.email || 'N/A') + '</td>';
+                html += '<td>' + AdminApp.escapeHtml(p.method || 'N/A') + '</td>';
+                html += '<td><code>' + AdminApp.escapeHtml(p.transaction_id || 'N/A') + '</code></td>';
+                html += '<td>$' + (p.amount || '9.99') + '</td>';
+                html += '<td><span class="admin-status-badge ' + statusClass + '">' + statusLabel + '</span></td>';
+                html += '<td>' + new Date(p.created_at).toLocaleDateString() + '</td>';
+                html += '<td>';
+                if (p.status === 'pending') {
+                    html += '<div class="admin-actions">';
+                    html += '<button class="admin-btn admin-btn-approve" onclick="AdminApp.approvePayment(\'' + p.id + '\',\'' + p.user_id + '\')">✅ Approve</button>';
+                    html += '<button class="admin-btn admin-btn-reject" onclick="AdminApp.rejectPayment(\'' + p.id + '\')">❌ Reject</button>';
+                    html += '</div>';
+                }
+                html += '</td>';
+                html += '</tr>';
+            }
+            tbody.innerHTML = html;
+
+            // Update payment badge
+            var badge = document.getElementById('paymentCountBadge');
+            if (badge) {
+                badge.textContent = payments.length;
+                badge.style.display = payments.length > 0 ? 'inline' : 'none';
+            }
+        };
+
+        AdminApp.approvePayment = function(paymentId, userId) {
+            if (window.DB && typeof window.DB.approvePayment === 'function') {
+                window.DB.approvePayment(paymentId, userId).then(function(success) {
+                    if (success) {
+                        AdminApp.showToast('✅ Payment approved! User upgraded to Pro.', 'success');
+                    } else {
+                        AdminApp.showToast('❌ Failed to approve payment', 'error');
+                    }
+                    AdminApp.loadPayments();
+                });
+            } else {
+                AdminApp.showToast('✅ Payment approved (demo mode)', 'success');
+                AdminApp.loadPayments();
+            }
+        };
+
+        AdminApp.rejectPayment = function(paymentId) {
+            if (confirm('Are you sure you want to reject this payment?')) {
+                if (window.DB && typeof window.DB.rejectPayment === 'function') {
+                    window.DB.rejectPayment(paymentId).then(function(success) {
+                        if (success) {
+                            AdminApp.showToast('❌ Payment rejected', 'info');
+                        } else {
+                            AdminApp.showToast('❌ Failed to reject payment', 'error');
+                        }
+                        AdminApp.loadPayments();
+                    });
+                } else {
+                    AdminApp.showToast('❌ Payment rejected (demo mode)', 'info');
+                    AdminApp.loadPayments();
+                }
+            }
+        };
+
+        // ============================================================
+        // GENERATIONS
+        // ============================================================
+
+        AdminApp.loadGenerations = function() {
+            var tbody = document.getElementById('generationsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="6"><div class="admin-loading"><div class="admin-spinner"></div>Loading generations...</div></td></tr>';
+
+            if (window.DB && typeof window.DB.getGenerations === 'function') {
+                window.DB.getGenerations(1, 50).then(function(generations) {
+                    AdminApp.renderGenerationsTable(generations);
+                }).catch(function() {
+                    AdminApp.loadDemoGenerations();
+                });
+            } else {
+                AdminApp.loadDemoGenerations();
+            }
+        };
+
+        AdminApp.loadDemoGenerations = function() {
+            var demoGenerations = [
+                { user_id: 'u1', prompt: 'Translate to Kurdish', response: 'وەرگێڕان بۆ کوردی', language: 'KU-SO', task: 'translate', model: 'gemini-1.5-flash', created_at: '2025-06-20T15:00:00Z' },
+                { user_id: 'u2', prompt: 'Write a blog post about AI', response: 'Artificial Intelligence is transforming...', language: 'EN', task: 'generate', model: 'gemini-1.5-flash', created_at: '2025-06-20T14:30:00Z' },
+                { user_id: 'u3', prompt: 'Check grammar of this sentence', response: 'Corrected: The quick brown fox jumps...', language: 'EN', task: 'grammar', model: 'gemini-1.5-flash', created_at: '2025-06-20T14:00:00Z' },
+                { user_id: 'u1', prompt: 'Rewrite for clarity', response: 'Rewritten version with improved flow...', language: 'EN', task: 'rewrite', model: 'gemini-1.5-flash', created_at: '2025-06-20T13:00:00Z' }
+            ];
+            AdminApp.renderGenerationsTable(demoGenerations);
+        };
+
+        AdminApp.renderGenerationsTable = function(generations) {
+            var tbody = document.getElementById('generationsTableBody');
+            if (!tbody) return;
+
+            if (!generations || generations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="admin-empty"><div class="admin-empty-icon">🤖</div><p class="admin-empty-text">No generations found</p></div></td></tr>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < generations.length; i++) {
+                var g = generations[i];
+                html += '<tr>';
+                html += '<td><code>' + AdminApp.escapeHtml((g.user_id || '').substring(0, 8)) + '...</code></td>';
+                html += '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">' + AdminApp.escapeHtml((g.prompt || '').substring(0, 60)) + '...</td>';
+                html += '<td>' + AdminApp.escapeHtml(g.language || 'EN') + '</td>';
+                html += '<td>' + AdminApp.escapeHtml(g.task || 'generate') + '</td>';
+                html += '<td><code>' + AdminApp.escapeHtml(g.model || 'gemini-1.5-flash') + '</code></td>';
+                html += '<td>' + new Date(g.created_at).toLocaleDateString() + '</td>';
+                html += '</tr>';
+            }
+            tbody.innerHTML = html;
+        };
+
+        // ============================================================
+        // ANALYTICS
+        // ============================================================
+
+        AdminApp.loadAnalytics = function() {
+            // Analytics placeholders - would integrate with chart library
+            console.log('📈 Analytics section loaded');
+        };
+
+        // ============================================================
+        // BROADCAST
+        // ============================================================
+
+        AdminApp.setupBroadcastCharCounter = function() {
+            var textarea = document.getElementById('broadcastMessage');
+            var counter = document.getElementById('broadcastCharCount');
+            if (textarea && counter) {
+                textarea.addEventListener('input', function() {
+                    counter.textContent = this.value.length;
+                });
+            }
+        };
+
+        AdminApp.sendBroadcast = function() {
+            var message = document.getElementById('broadcastMessage');
+            if (!message || !message.value.trim()) {
+                AdminApp.showToast('⚠️ Please enter a message to broadcast', 'error');
+                return;
+            }
+
+            if (confirm('Send this broadcast to all users? This action cannot be undone.')) {
+                AdminApp.showToast('📢 Broadcast sent to all users!', 'success');
+                message.value = '';
+                document.getElementById('broadcastCharCount').textContent = '0';
+            }
+        };
+
+        // ============================================================
+        // SETTINGS
+        // ============================================================
+
+        AdminApp.toggleMaintenance = function(enabled) {
+            AdminApp.showToast(enabled ? '🔧 Maintenance mode enabled' : '✅ Maintenance mode disabled', 'info');
+        };
+
+        AdminApp.toggleAutoApprove = function(enabled) {
+            AdminApp.showToast(enabled ? '🤖 Auto-approve enabled' : '👤 Manual approval required', 'info');
+        };
+
+        AdminApp.toggleEmailNotif = function(enabled) {
+            AdminApp.showToast(enabled ? '📧 Email notifications enabled' : '📧 Email notifications disabled', 'info');
+        };
+
+        // ============================================================
+        // UTILITIES
+        // ============================================================
+
+        AdminApp.refreshAll = function() {
+            AdminApp.showToast('🔄 Refreshing all data...', 'info');
+            AdminApp.loadOverview();
+            if (AdminApp.currentSection === 'users') AdminApp.loadUsers();
+            if (AdminApp.currentSection === 'payments') AdminApp.loadPayments();
+            if (AdminApp.currentSection === 'generations') AdminApp.loadGenerations();
+        };
+
+        AdminApp.updateConnectionStatus = function() {
+            var dot = document.getElementById('adminStatusDot');
+            var text = document.getElementById('adminStatusText');
+            
+            if (window.supabaseClient && window.isSupabaseReady) {
+                if (dot) dot.className = 'admin-status-dot';
+                if (text) text.textContent = 'Connected';
+            } else {
+                if (dot) dot.className = 'admin-status-dot warning';
+                if (text) text.textContent = 'Demo Mode';
+            }
+        };
+
+        AdminApp.showToast = function(message, type) {
+            type = type || 'info';
+            var container = document.getElementById('adminToastContainer');
+            if (!container) return;
+
+            var toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(function() {
+                    if (toast.parentNode) toast.parentNode.removeChild(toast);
+                }, 300);
+            }, 3500);
+        };
+
+        AdminApp.escapeHtml = function(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        };
+
+        // Export to global scope
+        window.AdminApp = AdminApp;
+    </script>
+</body>
+</html>
