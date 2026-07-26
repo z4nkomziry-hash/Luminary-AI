@@ -7,18 +7,26 @@
     <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AIVision">
+    <meta name="apple-mobile-web-app-title" content="Luminary AI">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="AIVision">
-    <meta name="description" content="AIVision - AI-Powered Multi-Lingual Language Platform with specialized Kurdish dialect support">
-    <meta name="keywords" content="AI, translation, Kurdish, multilingual, language learning, Badini, Sorani">
+    <meta name="application-name" content="Luminary AI">
+    <meta name="description" content="Luminary AI - Advanced Multi-Lingual AI Platform with specialized Kurdish dialect support">
+    <meta name="keywords" content="AI, translation, Kurdish, multilingual, language learning, Badini, Sorani, Luminary AI">
     <meta name="author" content="Zaniyar Al-Mzurii">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="AIVision - AI Language Platform">
-    <meta property="og:description" content="Advanced AI text generation and translation across 12 languages">
+    <meta property="og:title" content="Luminary AI - Advanced Language Platform">
+    <meta property="og:description" content="Advanced AI text generation and translation across 12 languages with Kurdish dialect expertise">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AIVision">
+    <meta property="og:site_name" content="Luminary AI">
+    <meta property="og:url" content="https://luminary-ai.vercel.app">
+    <meta property="og:image" content="https://luminary-ai.vercel.app/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Luminary AI - Advanced Language Platform">
+    <meta name="twitter:description" content="Advanced AI text generation across 12 languages">
+    <meta name="twitter:image" content="https://luminary-ai.vercel.app/og-image.png">
     
     <!-- iOS Specific -->
     <meta name="format-detection" content="telephone=no">
@@ -29,16 +37,20 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://luminary-ai.vercel.app">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=SF+Pro+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
-    <title>AIVision - AI Multi-Lingual Platform</title>
+    <title>Luminary AI - Advanced Multi-Lingual Platform</title>
 </head>
-<body class="dark-mode platform-ios" data-platform="ios">
+<body class="dark-mode platform-desktop" data-platform="desktop">
     
     <!-- ============================================ -->
     <!-- PLATFORM DETECTION SCRIPT                     -->
@@ -48,25 +60,19 @@
             const ua = navigator.userAgent || '';
             const body = document.body;
             
-            // Platform detection
             if (/iPhone|iPad|iPod/.test(ua)) {
                 body.dataset.platform = 'ios';
-                body.classList.add('platform-ios');
+                body.className = body.className.replace('platform-desktop', 'platform-ios');
             } else if (/Android/.test(ua)) {
                 body.dataset.platform = 'android';
-                body.classList.add('platform-android');
-            } else {
-                body.dataset.platform = 'desktop';
-                body.classList.add('platform-desktop');
+                body.className = body.className.replace('platform-desktop', 'platform-android');
             }
             
-            // Dark mode preference
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
                 body.classList.remove('dark-mode');
                 body.classList.add('light-mode');
             }
             
-            // Listen for changes
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
                 if (e.matches) {
                     body.classList.remove('light-mode');
@@ -95,12 +101,12 @@
             </div>
             <div class="header-center">
                 <h1 class="header-title">
-                    <span class="header-logo-icon">🌍</span>
-                    <span class="header-logo-text gradient-text">AIVision</span>
+                    <span class="header-logo-icon">✨</span>
+                    <span class="header-logo-text gradient-text">Luminary AI</span>
                 </h1>
             </div>
             <div class="header-right">
-                <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+                <button class="header-btn" id="themeToggle" aria-label="Toggle theme" onclick="toggleTheme()">
                     <span class="theme-icon">🌙</span>
                 </button>
                 <button class="header-btn profile-btn" id="profileBtn" aria-label="Profile">
@@ -115,8 +121,8 @@
         <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <span class="sidebar-logo-icon">🌍</span>
-                    <span class="sidebar-logo-text gradient-text">AIVision</span>
+                    <span class="sidebar-logo-icon">✨</span>
+                    <span class="sidebar-logo-text gradient-text">Luminary AI</span>
                 </div>
             </div>
             <nav class="sidebar-nav">
@@ -134,15 +140,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#languages" class="nav-link" data-page="languages">
+                        <a href="#ziman" class="nav-link" data-page="ziman">
                             <span class="nav-icon">🌐</span>
-                            <span class="nav-label">Languages</span>
+                            <span class="nav-label">Zîman Engine</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#ai-tools" class="nav-link" data-page="ai-tools">
                             <span class="nav-icon">🤖</span>
                             <span class="nav-label">AI Tools</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#pricing" class="nav-link" data-page="pricing">
+                            <span class="nav-icon">💎</span>
+                            <span class="nav-label">Pricing</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -160,6 +172,10 @@
                         <span class="user-name" id="sidebarUserName">Guest</span>
                         <span class="user-plan" id="sidebarUserPlan">Free Plan</span>
                     </div>
+                </div>
+                <div class="sidebar-footer-text">
+                    <p class="text-xs text-muted">Built by Zaniyar Al-Mzurii</p>
+                    <p class="text-xs text-muted">© 2025 Luminary AI</p>
                 </div>
             </div>
         </aside>
@@ -181,17 +197,18 @@
                 <!-- Hero Section -->
                 <div class="hero-section">
                     <div class="hero-bg-glow"></div>
+                    <div class="hero-bg-grid"></div>
                     <div class="hero-content">
                         <div class="hero-badge">
                             <span class="pulse-dot"></span>
                             <span>Powered by Google Gemini 1.5 Flash</span>
                         </div>
                         <h1 class="hero-title">
-                            <span class="gradient-text">AI-Powered Language</span>
-                            <br>Intelligence Platform
+                            Welcome to <span class="gradient-text">Luminary AI</span>
                         </h1>
+                        <p class="hero-tagline">Illuminate Your Language Journey</p>
                         <p class="hero-subtitle">
-                            Advanced AI text generation, translation, and grammar correction across 12 languages with specialized Kurdish dialect support.
+                            Advanced AI text generation, translation, and grammar correction across 12 languages with specialized Kurdish Badini & Sorani dialect support.
                         </p>
                         <div class="hero-actions">
                             <button class="btn btn-primary btn-lg" onclick="navigateTo('dashboard')">
@@ -215,30 +232,47 @@
                                 <span class="stat-value">&lt;1s</span>
                                 <span class="stat-label">Response</span>
                             </div>
+                            <div class="stat-item">
+                                <span class="stat-value">24/7</span>
+                                <span class="stat-label">Available</span>
+                            </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Zîman Promo Banner -->
+                <div class="promo-banner" id="zimanPromo">
+                    <div class="promo-banner-content">
+                        <div class="promo-icon">🌐</div>
+                        <div class="promo-text">
+                            <span class="promo-badge">NEW</span>
+                            <strong>Introducing Zîman Engine</strong>
+                            <p>12 languages • Specialized Kurdish dialects • Real-time translation</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="navigateTo('ziman')">Try Zîman →</button>
                     </div>
                 </div>
 
                 <!-- Demo Section -->
                 <div class="demo-section" id="demoSection">
-                    <h2 class="section-title">Experience the Power</h2>
+                    <h2 class="section-title">Experience the Power of Luminary AI</h2>
+                    <p class="section-subtitle">Try our AI with a quick interactive demo</p>
                     <div class="demo-card card">
                         <div class="demo-tabs" id="demoTabs">
-                            <button class="demo-tab active" data-tab="generate">Generate</button>
-                            <button class="demo-tab" data-tab="rewrite">Rewrite</button>
-                            <button class="demo-tab" data-tab="grammar">Grammar</button>
-                            <button class="demo-tab" data-tab="translate">Translate</button>
+                            <button class="demo-tab active" data-tab="generate">✨ Generate</button>
+                            <button class="demo-tab" data-tab="rewrite">🔄 Rewrite</button>
+                            <button class="demo-tab" data-tab="grammar">✅ Grammar</button>
+                            <button class="demo-tab" data-tab="translate">🌍 Translate</button>
                         </div>
                         <textarea 
                             class="demo-input" 
                             id="demoInput" 
                             placeholder="Enter your text here and see the magic happen..."
-                            rows="4"
+                            rows="5"
                         ></textarea>
                         <div class="demo-actions">
                             <button class="btn btn-primary" id="demoGenerateBtn" onclick="runDemo()">
-                                <span class="btn-icon">✨</span>
-                                Generate
+                                <span>✨</span> Generate
                             </button>
                             <button class="btn btn-ghost" onclick="clearDemo()">
                                 Clear
@@ -246,7 +280,7 @@
                         </div>
                         <div class="demo-result" id="demoResult" style="display:none;">
                             <div class="demo-result-header">
-                                <span>AI Response</span>
+                                <span class="demo-result-label">Luminary AI Response</span>
                                 <button class="btn btn-ghost btn-sm" onclick="copyDemoResult()">📋 Copy</button>
                             </div>
                             <div class="demo-result-content" id="demoResultContent"></div>
@@ -256,37 +290,89 @@
 
                 <!-- Features Grid -->
                 <div class="features-section">
-                    <h2 class="section-title">Powerful Features</h2>
+                    <h2 class="section-title">Why Choose Luminary AI?</h2>
+                    <p class="section-subtitle">Everything you need for multilingual AI content creation</p>
                     <div class="features-grid">
                         <div class="feature-card card">
-                            <div class="feature-icon">🤖</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">🤖</span>
+                            </div>
                             <h3>AI Text Generation</h3>
-                            <p>Create high-quality content in 12 languages with advanced AI models.</p>
+                            <p>Create high-quality content in 12 languages with state-of-the-art AI models trained for accuracy and cultural nuance.</p>
                         </div>
                         <div class="feature-card card">
-                            <div class="feature-icon">🌐</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">🌐</span>
+                            </div>
                             <h3>Precise Translation</h3>
-                            <p>Industry-leading translation with Kurdish dialect expertise.</p>
+                            <p>Industry-leading translation engine with specialized expertise in Kurdish dialects — both Badini (Kurmanji) and Sorani.</p>
                         </div>
                         <div class="feature-card card">
-                            <div class="feature-icon">✨</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">✨</span>
+                            </div>
                             <h3>Grammar Perfection</h3>
-                            <p>Advanced grammar correction across all supported languages.</p>
+                            <p>Advanced multilingual grammar correction that understands complex linguistic nuances across all supported languages.</p>
                         </div>
                         <div class="feature-card card">
-                            <div class="feature-icon">⚡</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">⚡</span>
+                            </div>
                             <h3>Lightning Fast</h3>
-                            <p>Powered by Google Gemini 1.5 Flash for instant responses.</p>
+                            <p>Powered by Google Gemini 1.5 Flash for near-instant responses with maximum computational efficiency.</p>
                         </div>
                         <div class="feature-card card">
-                            <div class="feature-icon">📱</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">📱</span>
+                            </div>
                             <h3>Cross-Platform</h3>
-                            <p>Optimized for iOS, Android, and Desktop with native feel.</p>
+                            <p>Optimized for iOS, Android, and Desktop with a native app-like feel on every device.</p>
                         </div>
                         <div class="feature-card card">
-                            <div class="feature-icon">🔒</div>
+                            <div class="feature-icon-wrapper">
+                                <span class="feature-icon">🔒</span>
+                            </div>
                             <h3>Enterprise Security</h3>
-                            <p>JWT authentication, encrypted data, and secure API routes.</p>
+                            <p>JWT authentication, encrypted data, and secure API routes protecting your content.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Developer Section -->
+                <div class="developer-section">
+                    <div class="developer-card card">
+                        <div class="developer-avatar-wrapper">
+                            <div class="developer-avatar-glow"></div>
+                            <img 
+                                src="/assets/developer/zaniyar.jpeg" 
+                                alt="Zaniyar Al-Mzurii - Founder of Luminary AI" 
+                                class="developer-avatar"
+                                onerror="this.onerror=null; this.src='/assets/developer/zaniyar.jpg';"
+                            />
+                            <div class="developer-status"></div>
+                        </div>
+                        <div class="developer-info">
+                            <div class="developer-badge">Full-Stack Developer & AI Engineer</div>
+                            <h3>Zaniyar Al-Mzurii</h3>
+                            <p class="developer-title">Founder & Lead Developer</p>
+                            <blockquote class="developer-quote">
+                                "I build custom high-performance websites, mobile applications, and AI integrations tailored to your business needs at highly reasonable & competitive prices."
+                            </blockquote>
+                            <div class="developer-actions">
+                                <a href="https://wa.me/9647506045491" target="_blank" rel="noopener" class="btn btn-primary">
+                                    💬 Order Custom Solution
+                                </a>
+                                <a href="https://t.me/z_14x" target="_blank" rel="noopener" class="btn btn-secondary">
+                                    📱 Telegram
+                                </a>
+                            </div>
+                            <div class="developer-socials">
+                                <a href="https://wa.me/9647506045491" target="_blank" rel="noopener" class="social-link" title="WhatsApp">💬</a>
+                                <a href="https://t.me/z_14x" target="_blank" rel="noopener" class="social-link" title="Telegram">📱</a>
+                                <a href="mailto:z.14x@outlook.com" class="social-link" title="Email">📧</a>
+                                <a href="https://www.instagram.com/z44nko" target="_blank" rel="noopener" class="social-link" title="Instagram">📷</a>
+                                <a href="https://www.snapchat.com/add/al-mzurii" target="_blank" rel="noopener" class="social-link" title="Snapchat">👻</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -297,7 +383,8 @@
             <!-- ==================================== -->
             <section class="page" id="page-dashboard" data-page="dashboard">
                 <div class="dashboard-header">
-                    <h2 class="section-title">Dashboard</h2>
+                    <h2 class="section-title">Luminary AI Dashboard</h2>
+                    <p class="section-subtitle">Your AI workspace overview</p>
                     <div class="dashboard-stats-grid">
                         <div class="stat-card card">
                             <div class="stat-card-icon">📊</div>
@@ -307,7 +394,7 @@
                         <div class="stat-card card">
                             <div class="stat-card-icon">🤖</div>
                             <div class="stat-card-value" id="dashGenerations">0</div>
-                            <div class="stat-card-label">Generations</div>
+                            <div class="stat-card-label">Generations Today</div>
                         </div>
                         <div class="stat-card card">
                             <div class="stat-card-icon">💎</div>
@@ -317,25 +404,49 @@
                         <div class="stat-card card">
                             <div class="stat-card-icon">⏳</div>
                             <div class="stat-card-value" id="dashPending">0</div>
-                            <div class="stat-card-label">Pending</div>
+                            <div class="stat-card-label">Pending Payments</div>
                         </div>
                     </div>
                 </div>
                 <div class="dashboard-content card">
                     <h3>Recent Activity</h3>
                     <div class="activity-list" id="activityList">
-                        <p class="text-muted">Loading activity...</p>
+                        <div class="activity-item skeleton">
+                            <div class="skeleton-avatar"></div>
+                            <div class="skeleton-text"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- ==================================== -->
-            <!-- LANGUAGES PAGE                        -->
+            <!-- ZÎMAN PAGE                            -->
             <!-- ==================================== -->
-            <section class="page" id="page-languages" data-page="languages">
-                <h2 class="section-title">12 Languages Supported</h2>
-                <div class="languages-grid" id="languagesGrid">
-                    <!-- Populated by JavaScript -->
+            <section class="page" id="page-ziman" data-page="ziman">
+                <div class="ziman-hero">
+                    <h2 class="section-title">
+                        <span class="gradient-text">Zîman Engine</span>
+                    </h2>
+                    <p class="section-subtitle">The Ultimate AI Language Intelligence Suite — Powered by Luminary AI</p>
+                    <p class="ziman-description">
+                        Experience the most advanced multilingual AI translation engine with unmatched support for Kurdish Badini and Sorani dialects. Translate, rewrite, and perfect content across 12 languages with cultural intelligence.
+                    </p>
+                    <div class="ziman-stats">
+                        <div class="ziman-stat">
+                            <span class="ziman-stat-value">12</span>
+                            <span class="ziman-stat-label">Languages</span>
+                        </div>
+                        <div class="ziman-stat">
+                            <span class="ziman-stat-value">2</span>
+                            <span class="ziman-stat-label">Kurdish Dialects</span>
+                        </div>
+                        <div class="ziman-stat">
+                            <span class="ziman-stat-value">99.9%</span>
+                            <span class="ziman-stat-label">Accuracy</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" onclick="navigateTo('ai-tools')">
+                        Explore Zîman Tools →</button>
                 </div>
             </section>
 
@@ -343,31 +454,87 @@
             <!-- AI TOOLS PAGE                         -->
             <!-- ==================================== -->
             <section class="page" id="page-ai-tools" data-page="ai-tools">
-                <h2 class="section-title">AI Tools</h2>
+                <h2 class="section-title">Luminary AI Tools</h2>
+                <p class="section-subtitle">Powerful AI-powered utilities at your fingertips</p>
                 <div class="tools-grid">
                     <div class="tool-card card">
                         <div class="tool-icon">📝</div>
                         <h3>Text Generator</h3>
-                        <p>Generate creative text content</p>
-                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                        <p>Generate creative, high-quality text content in any supported language</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
                     </div>
                     <div class="tool-card card">
                         <div class="tool-icon">🔄</div>
-                        <h3>Rewriter</h3>
-                        <p>Rewrite and improve your text</p>
-                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                        <h3>Content Rewriter</h3>
+                        <p>Rewrite and improve your text while maintaining original meaning</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
                     </div>
                     <div class="tool-card card">
                         <div class="tool-icon">✅</div>
-                        <h3>Grammar Check</h3>
-                        <p>Fix grammar and punctuation</p>
-                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                        <h3>Grammar Checker</h3>
+                        <p>Fix grammar, spelling, and punctuation across all 12 languages</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
                     </div>
                     <div class="tool-card card">
                         <div class="tool-icon">🌍</div>
                         <h3>Translator</h3>
-                        <p>Translate between 12 languages</p>
-                        <button class="btn btn-primary btn-sm">Use Tool</button>
+                        <p>Instant, context-aware translation with cultural intelligence</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
+                    </div>
+                    <div class="tool-card card">
+                        <div class="tool-icon">📚</div>
+                        <h3>Lesson Generator</h3>
+                        <p>Auto-generate language lessons with vocabulary and exercises</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
+                    </div>
+                    <div class="tool-card card">
+                        <div class="tool-icon">🎯</div>
+                        <h3>Quiz Creator</h3>
+                        <p>Create interactive quizzes from any text or topic</p>
+                        <button class="btn btn-primary btn-sm">Use Tool →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================================== -->
+            <!-- PRICING PAGE                          -->
+            <!-- ==================================== -->
+            <section class="page" id="page-pricing" data-page="pricing">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Start free. Upgrade when you need more power.</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card card">
+                        <div class="pricing-header">
+                            <h3>Free</h3>
+                            <div class="pricing-price">$0<span>/month</span></div>
+                            <p>Perfect for getting started</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✅ 5 AI generations per day</li>
+                            <li>✅ 12 language support</li>
+                            <li>✅ Basic grammar correction</li>
+                            <li>✅ Standard translation</li>
+                            <li>✅ Community support</li>
+                        </ul>
+                        <button class="btn btn-secondary btn-block">Get Started Free</button>
+                    </div>
+                    <div class="pricing-card card featured">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Pro</h3>
+                            <div class="pricing-price">$9.99<span>/month</span></div>
+                            <p>For power users and professionals</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✅ Unlimited AI generations</li>
+                            <li>✅ Advanced Kurdish dialect tuning</li>
+                            <li>✅ Extended context window (4K tokens)</li>
+                            <li>✅ Priority processing speed</li>
+                            <li>✅ Advanced grammar correction</li>
+                            <li>✅ Priority support</li>
+                            <li>✅ Early access to new features</li>
+                        </ul>
+                        <button class="btn btn-primary btn-block">Upgrade to Pro</button>
                     </div>
                 </div>
             </section>
@@ -377,39 +544,63 @@
             <!-- ==================================== -->
             <section class="page" id="page-settings" data-page="settings">
                 <h2 class="section-title">Settings</h2>
-                <div class="settings-list card">
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Dark Mode</span>
-                            <span class="setting-desc">Toggle dark/light theme</span>
+                <div class="settings-container">
+                    <div class="settings-list card">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-icon">🌙</span>
+                                <div>
+                                    <span class="setting-label">Dark Mode</span>
+                                    <span class="setting-desc">Toggle dark/light theme</span>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" checked onchange="toggleTheme()">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="darkModeToggle" checked onchange="toggleTheme()">
-                            <span class="toggle-slider"></span>
-                        </label>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-icon">🌐</span>
+                                <div>
+                                    <span class="setting-label">Language</span>
+                                    <span class="setting-desc">Select your preferred language</span>
+                                </div>
+                            </div>
+                            <select class="select-input" id="languageSelect" onchange="changeLanguage(this.value)">
+                                <option value="EN">🇬🇧 English</option>
+                                <option value="KU-BD">🏴 Kurdish Badini</option>
+                                <option value="KU-SO">🏴 Kurdish Sorani</option>
+                                <option value="AR">🇸🇦 Arabic</option>
+                                <option value="TR">🇹🇷 Turkish</option>
+                                <option value="FA">🇮🇷 Persian</option>
+                                <option value="DE">🇩🇪 German</option>
+                                <option value="FR">🇫🇷 French</option>
+                                <option value="ES">🇪🇸 Spanish</option>
+                                <option value="RU">🇷🇺 Russian</option>
+                                <option value="ZH">🇨🇳 Chinese</option>
+                                <option value="HI">🇮🇳 Hindi</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-icon">🔔</span>
+                                <div>
+                                    <span class="setting-label">Notifications</span>
+                                    <span class="setting-desc">Enable push notifications</span>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notifToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Language</span>
-                            <span class="setting-desc">Select your preferred language</span>
-                        </div>
-                        <select class="select-input" id="languageSelect" onchange="changeLanguage(this.value)">
-                            <option value="EN">English</option>
-                            <option value="KU-BD">Kurdish Badini</option>
-                            <option value="KU-SO">Kurdish Sorani</option>
-                            <option value="AR">Arabic</option>
-                            <option value="TR">Turkish</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-info">
-                            <span class="setting-label">Notifications</span>
-                            <span class="setting-desc">Enable push notifications</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="notifToggle" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
+                    <div class="settings-about card">
+                        <h3>About Luminary AI</h3>
+                        <p>Version 6.0.0</p>
+                        <p>Built with ❤️ by Zaniyar Al-Mzurii</p>
+                        <p>© 2025 Luminary AI. All rights reserved.</p>
                     </div>
                 </div>
             </section>
@@ -417,7 +608,7 @@
         </main>
 
         <!-- ======================================== -->
-        <!-- BOTTOM TAB BAR (iOS/Android Mobile)       -->
+        <!-- BOTTOM TAB BAR (Mobile)                   -->
         <!-- ======================================== -->
         <nav class="tab-bar" id="tabBar" role="navigation" aria-label="Bottom navigation">
             <button class="tab-item active" data-page="home" onclick="navigateTo('home')" aria-label="Home" aria-current="page">
@@ -428,13 +619,13 @@
                 <span class="tab-icon">📊</span>
                 <span class="tab-label">Dashboard</span>
             </button>
-            <button class="tab-item" data-page="languages" onclick="navigateTo('languages')" aria-label="Languages">
+            <button class="tab-item" data-page="ziman" onclick="navigateTo('ziman')" aria-label="Zîman">
                 <span class="tab-icon">🌐</span>
-                <span class="tab-label">Languages</span>
+                <span class="tab-label">Zîman</span>
             </button>
             <button class="tab-item" data-page="ai-tools" onclick="navigateTo('ai-tools')" aria-label="AI Tools">
                 <span class="tab-icon">🤖</span>
-                <span class="tab-label">AI Tools</span>
+                <span class="tab-label">Tools</span>
             </button>
             <button class="tab-item" data-page="settings" onclick="navigateTo('settings')" aria-label="Settings">
                 <span class="tab-icon">⚙️</span>
